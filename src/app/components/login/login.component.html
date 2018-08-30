@@ -1,0 +1,56 @@
+<section class="has-text-centered">
+  <div *ngIf="auth.user | async; then authenticated else guest">
+  </div>
+
+  <ng-template #guest>
+    <section class="bd-index-fullscreen hero is-fullheight is-primary">
+      <div class="hero-body has-text-centered">
+        <div class="container">
+          <header>
+            <h3 class="title is-3">
+              <strong>Hi, nice to see you!</strong>
+            </h3>
+            <h4 class="subtitle is-4">
+              Login to get started
+            </h4>
+            <button class="button" (click)="auth.googleLogin()">
+              <span>
+                <i class="fa fa-google"></i>
+              </span>
+              <span style="margin-left: 5px"> Login with Google </span>
+            </button>
+          </header>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+
+  <ng-template #authenticated>
+    <section class="bd-index-fullscreen hero is-fullheight is-primary">
+      <div class="hero-body has-text-centered">
+        <div class="container">
+          <header>
+            <div *ngIf="auth.user | async as user">
+              <h3 class="title is-3">
+                <strong>Hi, nice to see you again {{ user.displayName }}!</strong>
+              </h3>
+              <br>
+              <img [src]="user.photoURL" height="256px" width="256px" style="border-radius: 5px">
+              <br>
+              <br>
+              <button class="button" (click)="auth.hideLoginComponent()">
+                <a [routerLink]="['/home']">
+                  <span> Let's get started ! </span>
+                </a>
+              </button>
+              <br>
+              <br>
+              <button class="button" (click)="auth.signOut()">Logout</button>
+            </div>
+          </header>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+
+</section>

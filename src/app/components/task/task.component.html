@@ -1,0 +1,85 @@
+<h2> {{taskService.selectedTaskName}}</h2>
+<br>
+
+<h3 style="width: 600px;"> {{taskService.selectedTaskDesc}}</h3>
+<div class="back-button">
+  <a [routerLink]="[taskService.previousPage]">
+    <button class="button is-primary"> Back </button>
+  </a>
+</div>
+<br>
+<button class="button is-primary" *ngIf="!startEditing" (click)="editStart()"> Edit task! </button>
+<div *ngIf="startEditing">
+  <div class="field" style="width: 500px">
+    <label class="label">Task name</label>
+    <div class="control">
+      <input class="input" [class.is-danger]="editTaskName.invalid" type="text" placeholder="Task name" [formControl]="editTaskName"
+        required>
+      <p *ngIf="editTaskName.invalid" class="help is-danger">Task name is required</p>
+    </div>
+    <label class="label" style="padding-top: 10px">Task description</label>
+    <div class="control">
+      <textarea class="textarea" [class.is-danger]="editTaskDesc.invalid" placeholder="Project description" [formControl]="editTaskDesc"
+        required></textarea>
+      <p *ngIf="editTaskDesc.invalid" class="help is-danger">Task description is required</p>
+    </div>
+    <label class="label" style="padding-top: 10px">Task status</label>
+    <div class="select">
+      <select [formControl]="editTaskStatus" required>
+        <option value="To do"> To do </option>
+        <option value="In progress"> In progress</option>
+        <option value="Code review"> Code review</option>
+        <option value="Done"> Done</option>
+      </select>
+    </div>
+    <label class="label" style="padding-top: 10px">Task priority</label>
+    <div class="select">
+      <select [formControl]="editTaskPriority" required>
+        <option value="major"> Major </option>
+        <option value="important"> Important</option>
+        <option value="normal"> Normal </option>
+        <option value="low"> Low</option>
+        <option value="small"> Small thing</option>
+      </select>
+    </div>
+    <label class="label" style="padding-top: 10px">Task's project</label>
+    <div class="select">
+      <select [formControl]="editTaskAssignedToProject">
+        <option *ngFor="let project of projectsService.projects | async" [value]="[project.projectID, project.projectName, project.projectType]"> {{project.projectName}}</option>
+      </select>
+    </div>
+    <br>
+    <br>
+    <button class="button is-primary" (click)="taskService.editTask(editTaskName.value, editTaskDesc.value, editTaskStatus.value, editTaskPriority.value, editTaskAssignedToProject.value, editTaskDone.value, taskService.selectedTaskProjectID); editEnd()"
+      [disabled]="editTaskName.invalid || editTaskDesc.invalid || editTaskAssignedToProject.invalid || editTaskDone.invalid || editTaskPriority.invalid || editTaskStatus.invalid">
+      Save </button>
+    <button class="button is-danger" style="margin-left: 10px" (click)="editEnd()"> Cancel </button>
+  </div>
+</div>
+<br>
+<br>
+<p> Add notes to your task!</p>
+<div *ngIf="!addingNote">
+    <button class="button is-primary" (click)="startAddingNote()"> Add note </button>
+  </div>
+<h3> Notes: </h3>
+<div *ngIf="addingNote">
+  <div class="field" style="width: 500px">
+    <label class="label" style="padding-top: 10px">Note description</label>
+    <div class="control">
+      <textarea class="textarea" placeholder="Project description" [formControl]="noteDesc" required></textarea>
+    </div>
+  </div>
+  <button class="button is-primary" [disabled]="noteDesc.invalid" (click)="taskService.addNote(taskService.selectedTaskID, noteDesc.value); endAddingNote()">
+    Save </button>
+  <button class="button is-danger" (click)="endAddingNote()" style="margin-left: 10px"> Cancel</button>
+</div>
+<br>
+<br>
+<div class="notes-wrapper">
+  <article *ngFor="let note of taskService.selectedTaskNotes" class="message note" (click)="taskService.deleteNote(taskService.selectedTaskID, note.note)" >
+    <div class="message-body">
+      {{note.note}}
+    </div>
+  </article>
+</div>

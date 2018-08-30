@@ -1,0 +1,144 @@
+<h2> Calendar</h2>
+<h3 class="add-event" (click)="showForm()"> Add event</h3>
+<div class="field" style="width: 300px" *ngIf="showFormClicked === true">
+  <label class="label">Event name</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="Event name" [formControl]="eventName" required>
+  </div>
+  <label class="label" style="padding-top: 10px">Event description</label>
+  <div class="control">
+    <textarea class="textarea" placeholder="Event description" [formControl]="eventDesc" required></textarea>
+  </div>
+  <label class="label" style="padding-top: 10px">Event type</label>
+  <div class="select">
+    <select [formControl]="eventType">
+      <option value="Meeting"> Meeting </option>
+      <option value="Homework"> Homework </option>
+    </select>
+  </div>
+  <label class="label" style="padding-top: 10px">Event date</label>
+  <input [formControl]="eventDate" class="date" type="date" required>
+  <br>
+  <br>
+  <button (click)="calendarService.addCalendarEvent(eventDate.value, eventName.value, eventDesc.value, eventType.value); showForm(); cleanForm()"
+    class="button is-primary" [disabled]="eventName.invalid || eventDesc.invalid || eventType.invalid || eventDate.invalid">
+    Add event!</button>
+  <button class="button is-danger" (click)="showForm(); cleanForm()"> Cancel </button>
+  <br>
+</div>
+<br>
+<div class="calendar">
+  <div class="calendar-header">
+    <h2>
+      <i class="fa fa-arrow-left" (click)="monthBack(monthIndex - 1); closeEventInfo()" *ngIf="currentMonthOnCalendar !== 'January'"></i>
+      {{currentMonthOnCalendar}} {{date.getFullYear()}}
+      <i class="fa fa-arrow-right" (click)="monthNext(monthIndex + 1); closeEventInfo()" *ngIf="currentMonthOnCalendar !== 'December'"></i>
+    </h2>
+    <div class="calendar-header-day">
+      <span> Monday </span>
+    </div>
+    <div class="calendar-header-day">
+      <span> Tuesday </span>
+    </div>
+    <div class="calendar-header-day">
+      <span> Wednesday </span>
+    </div>
+    <div class="calendar-header-day">
+      <span> Thursday</span>
+    </div>
+    <div class="calendar-header-day">
+      <span> Friday </span>
+    </div>
+    <div class="calendar-header-day">
+      <span> Saturday</span>
+    </div>
+    <div class="calendar-header-day">
+      <span> Sunday</span>
+    </div>
+  </div>
+  <div class="calendar-main">
+    <div class="break"></div>
+    <div class="calendar-main-other-month" *ngFor="let dayFromAnotherMonth of calendarService.firstDaysInMonth">
+      <div class="calendar-date">
+        <span class="calendar-main-date-number">
+          {{dayFromAnotherMonth}}
+        </span>
+      </div>
+    </div>
+    <div class="calendar-main-this-month" [ngClass]="{'current-date': day === date.getDate() && monthIndex === date.getMonth()}"
+      *ngFor="let day of calendarService.numberDaysInMonth; let i = index">
+      <span class="calendar-date-number">
+        {{day}}
+      </span>
+      <div *ngFor="let date of (calendarService.calendarDates | async)">
+        <div *ngIf="day === date.day && monthIndex === date.month-1">
+          <div class="calendar-event" *ngFor="let event of date.events; let j = index" (click)="clickEvent(date.events[j].eventName, day, date.events[j].eventDesc, date.events[j].eventType)">
+            <span [class]="date.events[j].eventType">
+              {{date.events[j].eventName}}
+            </span>
+          </div>
+        </div>
+        <div class="calendar-event-detail-info-left" *ngIf="eventInfoName === date.events[0].eventName && dayName === day && calendarService.namesDaysInMonth[i] === 'Sunday'">
+          <div [class]="eventTypeToShow" *ngIf="date.projectID !== undefined">
+            <a [routerLink]="['/project']" (click)="projectsService.selectProject(date.projectID, 'calendar'); taskService.selectProject(date.projectID)">
+              {{eventNameToShow}} </a>
+            <div class="exit-menu" (click)="closeEventInfo()">
+              <i class="fa fa-times"></i>
+            </div>
+          </div>
+          <div [class]="eventTypeToShow" *ngIf="date.projectID === undefined"> {{eventNameToShow}}
+            <div class="exit-menu">
+              <i class="fa fa-times" (click)="closeEventInfo()"></i>
+            </div>
+            <div class="delete-menu" (click)="calendarService.deleteEvent(date.ID)">
+              <i class="fa fa-trash"></i>
+            </div>
+          </div>
+          <div class="body">
+            <div>
+              <i style="padding-right: 5px;" class="fa fa-clock-o"></i> {{day}} {{calendarService.namesDaysInMonth[i]}}
+            </div>
+            <div>
+              <i style="padding-right: 5px;" class="fa fa-file-text"></i> {{eventDescToShow}}
+            </div>
+          </div>
+        </div>
+        <div class="calendar-event-detail-info-right" *ngIf="eventInfoName === date.events[0].eventName && dayName === day && calendarService.namesDaysInMonth[i] !== 'Sunday'">
+          <div [class]="eventTypeToShow" *ngIf="date.projectID !== undefined">
+            <a [routerLink]="['/project']" (click)="projectsService.selectProject(date.projectID, 'calendar'); taskService.selectProject(date.projectID)">
+              {{eventNameToShow}} </a>
+            <div class="exit-menu" (click)="closeEventInfo()">
+              <i class="fa fa-times"></i>
+            </div>
+          </div>
+          <div [class]="eventTypeToShow" *ngIf="date.projectID === undefined"> {{eventNameToShow}}
+            <div class="exit-menu">
+              <i class="fa fa-times" (click)="closeEventInfo()"></i>
+            </div>
+            <div class="delete-menu" (click)="calendarService.deleteEvent(date.ID)">
+              <i class="fa fa-trash"></i>
+            </div>
+          </div>
+          <div class="body">
+            <div>
+              <i style="padding-right: 5px;" class="fa fa-clock-o"></i> {{day}} {{calendarService.namesDaysInMonth[i]}}
+            </div>
+            <div>
+              <i style="padding-right: 5px;" class="fa fa-file-text"></i> {{eventDescToShow}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="calendar-main-other-month" *ngFor="let dayFromAnotherMonth of calendarService.lastDaysInMonth">
+      <div class="calendar-main-date">
+        <span class="calendar-date">
+          {{dayFromAnotherMonth}}
+        </span>
+      </div>
+    </div>
+    <div class="break"></div>
+  </div>
+</div>
+
+

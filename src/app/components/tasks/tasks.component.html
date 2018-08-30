@@ -1,0 +1,132 @@
+<h2> Tasks </h2>
+
+<div class="tasksWrapper">
+  <div class="card task">
+    <header class="card-header">
+      <p class="card-header-title">
+        To do:
+      </p>
+    </header>
+    <div class="card-content" droppable (onDrop)="taskService.dragToToDo($event)" [dragOverClass]="'drag-target'" [dragHintClass]="'drag-hint'">
+      <div class="content" *ngFor="let task of taskService.toDoTasks | async" draggable [dragData]="task">
+        <a [routerLink]="['/task']" (click)="taskService.selectTask(task.taskID, 'tasks')">
+          <strong> {{task.taskName}}</strong>
+        </a>
+        <button class="button is-danger is-small delete-button" (click)="taskService.deleteSpecificTask(task.taskID, task.taskName, task.taskAssignedToProject)">
+          Delete </button>
+        <p> {{task.taskDescription}}</p>
+        <div [class]="task.taskAssignedToProjectType">
+          <a [routerLink]="['/project']" (click)="projectsService.selectProject(task.taskAssignedToProject, 'tasks'); taskService.selectProject(task.taskAssignedToProject)">
+            <span> {{task.taskAssignedToProjectName}}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card task">
+    <header class="card-header">
+      <p class="card-header-title">
+        In progress:
+      </p>
+    </header>
+    <div class="card-content" droppable (onDrop)="taskService.dragToInProgress($event)" [dragOverClass]="'drag-target'" [dragHintClass]="'drag-hint'">
+      <div class="content" *ngFor="let task of taskService.inProgressTasks | async" draggable [dragData]="task">
+        <a [routerLink]="['/task']" (click)="taskService.selectTask(task.taskID, 'tasks')">
+          <strong> {{task.taskName}}</strong>
+        </a>
+        <button class="button is-danger is-small delete-button" (click)="taskService.deleteSpecificTask(task.taskID,task.taskName, task.taskAssignedToProject)">
+          Delete </button>
+        <p> {{task.taskDescription}}</p>
+        <div>
+          <div [class]="task.taskAssignedToProjectType">
+            <a [routerLink]="['/project']" (click)="projectsService.selectProject(task.taskAssignedToProject, 'tasks'); taskService.selectProject(task.taskAssignedToProject)">
+              <span> {{task.taskAssignedToProjectName}}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card task">
+    <header class="card-header">
+      <p class="card-header-title">
+        Code review:
+      </p>
+    </header>
+    <div class="card-content" droppable (onDrop)="taskService.dragToCodeReview($event)" [dragOverClass]="'drag-target'" [dragHintClass]="'drag-hint'">
+      <div class="content" *ngFor="let task of taskService.codeReviewTasks | async" draggable [dragData]="task">
+        <a [routerLink]="['/task']" (click)="taskService.selectTask(task.taskID, 'tasks')">
+          <strong> {{task.taskName}}</strong>
+        </a>
+        <button class="button is-danger is-small delete-button" (click)="taskService.deleteSpecificTask(task.taskID,task.taskName, task.taskAssignedToProject)">
+          Delete </button>
+        <p> {{task.taskDescription}}</p>
+        <div>
+          <div [class]="task.taskAssignedToProjectType">
+            <a [routerLink]="['/project']" (click)="projectsService.selectProject(task.taskAssignedToProject, 'tasks'); taskService.selectProject(task.taskAssignedToProject)">
+              <span> {{task.taskAssignedToProjectName}}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card task">
+    <header class="card-header">
+      <p class="card-header-title">
+        Done:
+      </p>
+    </header>
+    <div class="card-content" droppable (onDrop)="taskService.dragToDone($event)" [dragOverClass]="'drag-target'" [dragHintClass]="'drag-hint'">
+      <div class="content" *ngFor="let task of taskService.doneTasks | async" draggable [dragData]="task">
+        <a [routerLink]="['/task']" (click)="taskService.selectTask(task.taskID, 'tasks')">
+          <strong> {{task.taskName}}</strong>
+        </a>
+        <button class="button is-danger is-small delete-button" (click)="taskService.deleteSpecificTask(task.taskID,task.taskName, task.taskAssignedToProject)">
+          Delete </button>
+        <p> {{task.taskDescription}}</p>
+        <div>
+          <div [class]="task.taskAssignedToProjectType">
+            <a [routerLink]="['/project']" (click)="projectsService.selectProject(task.taskAssignedToProject, 'tasks'); taskService.selectProject(task.taskAssignedToProject)">
+              <span> {{task.taskAssignedToProjectName}}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Add task</h3>
+<div class="field" style="width: 300px">
+  <label class="label">Task name</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="Task name" [formControl]="taskName" required>
+  </div>
+  <label class="label" style="padding-top: 10px">Task description</label>
+  <div class="control">
+    <textarea class="textarea" placeholder="task description" [formControl]="taskDescription" required></textarea>
+  </div>
+  <label class="label" style="padding-top: 10px"> Task assigned to project: </label>
+  <div class="select">
+    <select [formControl]="taskProject" required>
+      <option *ngFor="let project of projectsService.projects | async" [value]="[project.projectID, project.projectName, project.projectType]">
+        {{project.projectName}}</option>
+    </select>
+  </div>
+  <label class="label" style="padding-top: 10px"> Task priority </label>
+  <div class="select">
+    <select [formControl]="taskPriority" required>
+      <option value="major"> Major </option>
+      <option value="important"> Important</option>
+      <option value="normal"> Normal </option>
+      <option value="low"> Low</option>
+      <option value="small"> Small thing</option>
+    </select>
+  </div>
+</div>
+<button class="button is-primary" [disabled]="taskName.invalid || taskDescription.invalid || taskProject.invalid || taskPriority.invalid"
+  (click)="taskService.addTask(taskName.value, taskDescription.value, taskProject.value, taskPriority.value); cleanForm()">
+  Add task! </button>
+<br>
+<br>

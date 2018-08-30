@@ -1,0 +1,49 @@
+<h2> Yours todo list: </h2>
+<div *ngIf="!hasAddedTodos">
+  <label class="label" style="font-size: 18px"> Here you can add your small tasks!</label>
+</div>
+
+<div>
+  <ul *ngFor="let todo of todos | async">
+    <li (click)="deleteTodo(todo)" class="task">
+      <p style="font-size: 18px;"> Name: {{todo.todoName}} </p>
+      <p style="font-size: 18px;"> Importance: {{todo.todoImportance}} </p>
+      <hr style="width: 300px">
+    </li>
+  </ul>
+</div>
+
+
+<div class="field is-horizontal">
+  <div class="field-body">
+    <div class="field">
+      <div class="control is-expanded has-icons-left">
+        <input class="input" type="text" placeholder="To do ..." [formControl]="taskName" required>
+        <span class="icon is-small is-left">
+          <i class="fa fa-check"></i>
+        </span>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <div class="select">
+          <select [formControl]="taskImportance">
+            <option *ngFor="let list of tasksImportanceValues" [value]="list.value"> {{list.text}} </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!hasAddedTodos">
+  <button class="button is-primary" [disabled]="taskName.invalid" (click)="addTodo()"> Add todo!</button>
+</div>
+
+<div *ngIf="hasAddedTodos">
+  <button class="button is-primary" (click)="addTodo()" [disabled]="taskName.invalid"> Add another todo!</button>
+  <span style="opacity: 0"> p</span>
+  <button class="button is-primary" (click)="sortTodos()"> Sort todos by importance </button>
+</div>
+
+<br>

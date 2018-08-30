@@ -1,20 +1,49 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div *ngIf="auth.showLoginComponent">
+  <router-outlet> </router-outlet>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+<div *ngIf="!auth.showLoginComponent" class="wrapper">
+  <nav class="sideMenu">
+    <a [routerLink]="['/home']">
+      <h2>
+        <strong> Control panel </strong>
+      </h2>
+    </a>
+    <div class="wrapper">
+      <div class="wrapper-tabs">
+        <a [routerLink]="['/home']">
+          <div [class.selected]="pageService.homeSelected">
+            <i class="fa fa-home"></i> <span> Home </span> </div>
+        </a>
+      </div>
+      <a [routerLink]="['/projects']">
+        <div [class.selected]="pageService.projectsSelected">
+          <i class="fa fa-file-code-o"></i> <span> Projects </span> </div>
+      </a>
+      <a [routerLink]="['/tasks']">
+        <div [class.selected]="pageService.tasksSelected">
+          <i class="fa fa-tasks"></i> <span> Tasks </span> </div>
+      </a>
+      <a [routerLink]="['/timesheet']">
+        <div [class.selected]="pageService.timesheetSelected">
+          <i class="fa fa-clock-o"></i> <span> Timesheet </span> </div>
+      </a>
+      <a [routerLink]="['/calendar']">
+        <div [class.selected]="pageService.calendarSelected">
+          <i class="fa fa-calendar"></i> <span> Calendar </span> </div>
+      </a>
+    </div>
+
+    <div *ngIf="auth.user | async as user" class="userInfo">
+      <div style="padding-left: 20px">
+        <img [src]="user.photoURL" height="64px" width="64px" style="border-radius: 150px">
+      </div>
+      <div> {{user.displayName}} </div>
+      <div style="cursor: pointer;" (click)="auth.signOut()"> Logout </div>
+    </div>
+  </nav>
+
+  <div class="content" [@fadeAnimation]="getRouterOutletState(o)">
+    <router-outlet #o="outlet"></router-outlet>
+  </div>
+</div>

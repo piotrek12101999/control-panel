@@ -1,0 +1,81 @@
+.back-button {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0px;
+  right: 450px;
+}
+
+.back-button:hover {
+  text-decoration: none;
+}
+
+.link-download:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.date {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  align-items: center;
+  border: 1px solid #dbdbdb;
+  color: #363636;
+  border-radius: 4px;
+  box-shadow: none;
+  display: inline-flex;
+  font-size: 1rem;
+  height: 2.25em;
+  justify-content: flex-start;
+  line-height: 1.5;
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: calc(0.625em - 1px);
+  padding-right: calc(0.625em - 1px);
+  padding-top: calc(0.375em - 1px);
+  position: relative;
+  vertical-align: top;
+}
+
+.date:hover{
+  border: 1px solid #bdbbbb;
+}
+
+.date:focus{
+  outline: none;
+}
+
+.taskWrapper {
+  width: 1060px;
+  border-radius: 10px;
+  margin-top: 10px;
+  .task {
+    width: 200px;
+    display: inline-table;
+    border-radius: 5px;
+    margin-right: 10px;
+    .button {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.card-content {
+  a {
+    color: #4a4a4a;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.drag-hint {
+  border: #fedd56 dashed 2px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.drag-target{
+  border: #00d1b1 dashed 2px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}

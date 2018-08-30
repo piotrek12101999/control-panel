@@ -1,0 +1,192 @@
+<h2> {{projectsService.selectedProjectName}}</h2>
+<br>
+<h3 style="width: 600px;"> {{projectsService.selectedProjectDesc}}</h3>
+<div class="back-button">
+  <a [routerLink]="[projectsService.previousPage]">
+    <button class="button is-primary"> Back </button>
+  </a>
+</div>
+<br>
+<button *ngIf="!startEditingProject" class="button is-primary" (click)="editProject()"> Edit project!</button>
+<div *ngIf="startEditingProject">
+  <div class="field" style="width: 300px">
+    <label class="label">Project name</label>
+    <div class="control">
+      <input class="input" [class.is-danger]="editedProjectName.invalid" type="text" placeholder="Project name" [formControl]="editedProjectName"
+        required>
+      <p *ngIf="editedProjectName.invalid" class="help is-danger">Project name is required</p>
+    </div>
+    <label class="label" style="padding-top: 10px">Project description</label>
+    <div class="control">
+      <textarea class="textarea" [class.is-danger]="editedProjectDescription.invalid" placeholder="Project description" [formControl]="editedProjectDescription"
+        required></textarea>
+      <p *ngIf="editedProjectDescription.invalid" class="help is-danger">Project description is required</p>
+    </div>
+    <label class="label" style="padding-top: 10px">Project key</label>
+    <div class="control">
+      <input class="input" [class.is-danger]="editedProjectKey.invalid" type="text" placeholder="Project key" [formControl]="editedProjectKey"
+        required>
+      <p *ngIf="editedProjectKey.invalid" class="help is-danger">Project key is required</p>
+    </div>
+    <label class="label" style="padding-top: 10px">Project type</label>
+    <div class="select">
+      <select [formControl]="editedProjectType">
+        <option *ngFor="let type of projectTypeValues" [value]="type.value"> {{type.name}}</option>
+      </select>
+    </div>
+    <label class="label" style="padding-top: 10px">Project deadline (optional)</label>
+    <div class="control">
+      <input class="date" type="date" placeholder="Enter the date" [formControl]="editedProjectDate">
+    </div>
+  </div>
+  <button class="button is-primary" [disabled]="editedProjectName.invalid || editedProjectDescription.invalid || editedProjectKey.invalid"
+    (click)="projectsService.editProject(editedProjectName.value, editedProjectDescription.value, editedProjectKey.value, editedProjectType.value, editedProjectDate.value, projectsService.selectedProjectID); endEditProject()">
+    Save </button>
+  <button class="button is-danger" (click)="endEditProject()" style="margin-left: 10px"> Cancel </button>
+</div>
+<br>
+<br>
+
+
+
+<div *ngIf="!projectsService.hasRepo">
+  <h3> It seems to look like {{projectsService.selectedProjectName}} repository is empty</h3>
+  <h4> Upload files to project repository </h4>
+</div>
+
+<div *ngIf="projectsService.hasRepo">
+  <h3> {{projectsService.selectedProjectName}} repository:</h3>
+  <table style="width: 800px">
+    <tr>
+      <th>File name</th>
+      <th>File type</th>
+      <th>File size</th>
+    </tr>
+    <tr *ngFor="let file of fileService.files">
+      <td (click)="fileService.downloadRepo(projectsService.selectedRepoPath, file.fileName)" class="link-download"> {{file.fileName}} </td>
+      <td>
+        <span *ngIf="file.fileType === '' "> other </span>
+        <span *ngIf="file.fileType !== '' "> {{file.fileType}}</span>
+      </td>
+      <td> {{file.fileSize / 1024 | number: '1.0-0'}} kB </td>
+      <button class="button is-small is-danger" (click)="fileService.deleteFile(projectsService.projectsCollection, projectsService.selectedProjectID ,projectsService.selectedRepoPath, file.fileName, file)">
+        Delete file </button>
+    </tr>
+  </table>
+  <br>
+</div>
+
+
+<app-file-upload> </app-file-upload>
+
+<div *ngIf="projectsService.hasTasks !== true" width="300px">
+  <h3> It seems to look like this project doesn't have any tasks to do!</h3>
+  <h4> Enjoy your free time with party parrot </h4>
+  <img src="./../../../assets/party-parrot.gif" height="224" width="160">
+</div>
+
+<div *ngIf="projectsService.hasTasks === true">
+  <h3> {{projectsService.selectedProjectName}} tasks: </h3>
+  <div class="taskWrapper">
+    <div class="card task">
+      <header class="card-header">
+        <p class="card-header-title">
+          Major:
+        </p>
+      </header>
+      <div class="card-content" droppable (onDrop)="taskService.dragToMajor($event)" [dragOverClass]="'drag-target'" [dragHintClass]="'drag-hint'">
+        <div *ngFor="let task of taskService.selctedProjectMajorTasks | async; let i = index" draggable [dragData]="task">
+          <div class="content">
+            <a [routerLink]="['/task']" (click)="taskService.selectTask(task.taskID, 'project')">
+              <strong> {{task.taskName}} </strong>
+            </a>
+            <p> {{task.taskDescription}} </p>
+            <p> {{task.taskStatus}} </p>
+            <button class="button is-danger is-small" (click)="taskService.deleteSpecificTask(task.taskID, task.taskName, task.taskAssignedToProject)"> Delete </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card task">
+      <header class="card-header">
+        <p class="card-header-title">
+          Important:
+        </p>
+      </header>
+      <div class="card-content" droppable (onDrop)="taskService.dragToImportant($event)" [dragOverClass]="'drag-target'" [dragHintClass]="'drag-hint'">
+        <div *ngFor="let task of taskService.selctedProjectImportantTasks | async; let i = index" draggable [dragData]="task">
+          <div class="content">
+            <a [routerLink]="['/task']" (click)="taskService.selectTask(task.taskID, 'project')">
+              <strong> {{task.taskName}} </strong>
+            </a>
+            <p> {{task.taskDescription}} </p>
+            <p> {{task.taskStatus}} </p>
+            <button class="button is-danger is-small" (click)="taskService.deleteSpecificTask(task.taskID, task.taskName, task.taskAssignedToProject)"> Delete </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card task">
+      <header class="card-header">
+        <p class="card-header-title">
+          Normal:
+        </p>
+      </header>
+      <div class="card-content" droppable (onDrop)="taskService.dragToNormal($event)" [dragOverClass]="'drag-target'" [dragHintClass]="'drag-hint'">
+        <div *ngFor="let task of taskService.selctedProjectNormalTasks | async; let i = index" draggable [dragData]="task">
+          <div class="content">
+            <a [routerLink]="['/task']" (click)="taskService.selectTask(task.taskID, 'project')">
+              <strong> {{task.taskName}} </strong>
+            </a>
+            <p> {{task.taskDescription}} </p>
+            <p> {{task.taskStatus}} </p>
+            <button class="button is-danger is-small" (click)="taskService.deleteSpecificTask(task.taskID, task.taskName, task.taskAssignedToProject)"> Delete </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card task">
+      <header class="card-header">
+        <p class="card-header-title">
+          Low:
+        </p>
+      </header>
+      <div class="card-content" droppable (onDrop)="taskService.dragToLow($event)" [dragOverClass]="'drag-target'" [dragHintClass]="'drag-hint'">
+        <div *ngFor="let task of taskService.selctedProjectLowTasks | async; let i = index" draggable [dragData]="task">
+          <div class="content">
+            <a [routerLink]="['/task']" (click)="taskService.selectTask(task.taskID, 'project')">
+              <strong> {{task.taskName}} </strong>
+            </a>
+            <p> {{task.taskDescription}} </p>
+            <p> {{task.taskStatus}} </p>
+            <button class="button is-danger is-small" (click)="taskService.deleteSpecificTask(task.taskID, task.taskName, task.taskAssignedToProject)"> Delete </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card task">
+      <header class="card-header">
+        <p class="card-header-title">
+          Small thing:
+        </p>
+      </header>
+      <div class="card-content" droppable (onDrop)="taskService.dragToSmall($event)" [dragOverClass]="'drag-target'" [dragHintClass]="'drag-hint'">
+        <div *ngFor="let task of taskService.selctedProjectSmallTasks | async; let i = index" draggable [dragData]="task">
+          <div class="content">
+            <a [routerLink]="['/task']" (click)="taskService.selectTask(task.taskID, 'project')">
+              <strong> {{task.taskName}} </strong>
+            </a>
+            <p> {{task.taskDescription}} </p>
+            <p> {{task.taskStatus}} </p>
+            <button class="button is-danger is-small" (click)="taskService.deleteSpecificTask(task.taskID, task.taskName, task.taskAssignedToProject)"> Delete </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br>

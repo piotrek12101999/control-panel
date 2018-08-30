@@ -1,0 +1,35 @@
+<div *ngIf="!hasCity">
+  <div class="field" style="width: 300px">
+    <label class="label" style="font-size: 18px">Add city to show weather!</label>
+    <div class="control has-icons-left">
+      <input class="input" [formControl]="cityToCreate" type="text" placeholder="City name" required>
+      <span class="icon is-small is-left">
+        <i class="fa fa-home"></i>
+      </span>
+    </div>
+    <br>
+    <div class="control">
+      <button class="button is-primary" (click)="addCity()" [disabled]="cityToCreate.invalid"> Set City!</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="hasCity">
+  <h2> {{weahterService.city$ | async}} </h2>
+  <h2> {{weahterService.date$| async | date:'short' }} </h2>
+  <h2> Weather: {{ weahterService.weatherDescription$| async }}</h2>
+  <h2> Temperature: {{ weahterService.temperature$ | async | number: '1.0-0'}} &deg;C </h2>
+  <h2> Wind: {{ weahterService.wind$ | async | number: '1.0-0'}} km/h </h2>
+  <div class="field" style="width: 300px">
+    <label class="label" style="font-size: 18px">You can always update your current city!</label>
+    <div class="control has-icons-left">
+      <input class="input" [formControl]="cityToUpdate" type="text" placeholder="City name" required>
+      <span class="icon is-small is-left">
+        <i class="fa fa-home"></i>
+      </span>
+    </div>
+    <br>
+    <button class="button is-primary" (click)="updateCity()" [disabled]="cityToUpdate.invalid"> Update City!</button>
+  </div>
+</div>
+

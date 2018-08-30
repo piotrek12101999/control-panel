@@ -1,0 +1,94 @@
+<h2> Timesheet for month {{timesheetService.monthToWatch.toLowerCase()}} {{timesheetService.date.getFullYear()}}
+  <span class="month-change" (click)="monthChangeClick();"> (Click to change month) </span>
+</h2>
+<div class="field" style="width: 300px" *ngIf="showForm">
+  <label class="label" style="padding-top: 10px">Select month</label>
+  <div class="select">
+    <select [formControl]="monthForm">
+      <option *ngFor="let month of monthsForForm" [value]="month"> {{month}} </option>
+    </select>
+  </div>
+  <button (click)="timesheetService.changeMonth(monthForm.value); monthChangeClick()" class="button is-primary" style="margin-left: 10px">
+    Save </button>
+</div>
+<h3 (click)="week1Click()" class="week"> Week 1 </h3>
+<div [hidden]="!week1Clicked">
+  <div *ngFor="let day of (timesheetService.timesheets | async)">
+    <div *ngIf="day.weekOfMonth === 1">
+      <div class="main-date">{{day.day}} {{day.month.toLowerCase()}} {{day.nameOfTheDay}}, worked time: {{day.sumOfHours}} hours {{day.sumOfMinutes}}
+        minutes
+      </div>
+      <span *ngFor="let hour of day.workHours; let j = index"> {{day.workHours[j].hour}}:{{day.workHours[j].minute}}
+        <span *ngIf="j%2 === 0"> - </span> <span *ngIf="j%2 !== 0" style="margin-right: 10px">  </span>
+      </span>
+    </div>
+  </div>
+  <br>
+  <h4> Work hours during this week: {{timesheetService.week1Hours}} hours {{timesheetService.week1Minutes}} minutes</h4>
+</div>
+<h3 (click)="week2Click()" class="week"> Week 2 </h3>
+<div [hidden]="!week2Clicked">
+  <div *ngFor="let day of (timesheetService.timesheets | async)">
+    <div *ngIf="day.weekOfMonth === 2">
+      <div class="main-date">{{day.day}} {{day.month.toLowerCase()}} {{day.nameOfTheDay}}, worked time: {{day.sumOfHours}} hours {{day.sumOfMinutes}}
+        minutes
+      </div>
+      <span *ngFor="let hour of day.workHours; let j = index"> {{day.workHours[j].hour}}:{{day.workHours[j].minute}}
+        <span *ngIf="j%2 === 0"> - </span> <span *ngIf="j%2 !== 0" style="margin-right: 10px">  </span>
+      </span>
+    </div>
+  </div>
+  <br>
+  <h4> Work hours during this week: {{timesheetService.week2Hours}} hours {{timesheetService.week2Minutes}} minutes</h4>
+</div>
+<h3 (click)="week3Click()" class="week"> Week 3 </h3>
+<div [hidden]="!week3Clicked">
+  <div *ngFor="let day of (timesheetService.timesheets | async)">
+    <div *ngIf="day.weekOfMonth === 3">
+      <div class="main-date">{{day.day}} {{day.month.toLowerCase()}} {{day.nameOfTheDay}}, worked time: {{day.sumOfHours}} hours {{day.sumOfMinutes}}
+        minutes
+      </div>
+      <span *ngFor="let hour of day.workHours; let j = index"> {{day.workHours[j].hour}}:{{day.workHours[j].minute}}
+        <span *ngIf="j%2 === 0"> - </span> <span *ngIf="j%2 !== 0" style="margin-right: 10px">  </span>
+      </span>
+    </div>
+  </div>
+  <br>
+  <h4> Work hours during this week: {{timesheetService.week3Hours}} hours {{timesheetService.week3Minutes}} minutes</h4>
+</div>
+<h3 (click)="week4Click()" class="week"> Week 4 </h3>
+<div [hidden]="!week4Clicked">
+  <div *ngFor="let day of (timesheetService.timesheets | async)">
+    <div *ngIf="day.weekOfMonth === 4">
+      <div class="main-date">{{day.day}} {{day.month.toLowerCase()}} {{day.nameOfTheDay}}, worked time: {{day.sumOfHours}} hours {{day.sumOfMinutes}}
+        minutes
+      </div>
+      <span *ngFor="let hour of day.workHours; let j = index"> {{day.workHours[j].hour}}:{{day.workHours[j].minute}}
+        <span *ngIf="j%2 === 0"> - </span> <span *ngIf="j%2 !== 0" style="margin-right: 10px">  </span>
+      </span>
+    </div>
+  </div>
+  <br>
+  <h4> Work hours during this week: {{timesheetService.week4Hours}} hours {{timesheetService.week4Minutes}} minutes</h4>
+</div>
+<h3 (click)="week5Click()" class="week"> Week 5 </h3>
+<div [hidden]="!week5Clicked">
+  <div *ngFor="let day of (timesheetService.timesheets | async)">
+    <div *ngIf="day.weekOfMonth === 5">
+      <div class="main-date">{{day.day}} {{day.month.toLowerCase()}} {{day.nameOfTheDay}}, worked time: {{day.sumOfHours}} hours {{day.sumOfMinutes}}
+        minutes
+      </div>
+      <span *ngFor="let hour of day.workHours; let j = index"> {{day.workHours[j].hour}}:{{day.workHours[j].minute}}
+        <span *ngIf="j%2 === 0"> - </span> <span *ngIf="j%2 !== 0" style="margin-right: 10px">  </span>
+      </span>
+    </div>
+  </div>
+  <br>
+  <h4> Work hours during this week: {{timesheetService.week5Hours}} hours {{timesheetService.week5Minutes}} minutes</h4>
+</div>
+<div *ngIf="timesheetService.startClicked === false">
+  <button (click)="buttonClicked();timesheetService.addWorkHours()" class="button is-primary"> Start</button>
+</div>
+<div *ngIf="timesheetService.startClicked === true">
+  <button (click)="buttonClicked();timesheetService.stopWork()" class="button is-primary"> Stop</button>
+</div>

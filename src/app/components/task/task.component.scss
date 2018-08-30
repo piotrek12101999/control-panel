@@ -1,0 +1,31 @@
+.back-button {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0px;
+  right: 450px;
+}
+
+.notes-wrapper {
+  width: 1100px;
+  .note {
+    display: inline-table;
+    width: 330px;
+    margin-left: 10px;
+    transition: all .35s;
+  }
+  .note:hover {
+    background-color: #fe385f;
+    color: white;
+    transition: all .35s;
+    cursor: pointer;
+  }
+  .message-body {
+    transition: all .35s;
+  }
+  .note:hover .message-body {
+    color: white;
+    transition: all .35s;
+    border-color: #d12d4d;
+  }
+}

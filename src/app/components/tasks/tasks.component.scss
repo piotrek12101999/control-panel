@@ -1,0 +1,108 @@
+a {
+  color: #4a4a4a;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.tasksWrapper {
+  width: 1060px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  .task {
+    width: 250px;
+    border-radius: 10px;
+    background-color: white;
+    display: inline-table;
+    margin-left: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    .delete-button {
+      display: inline;
+      float: right;
+    }
+    .WebDev {
+      border-radius: 5px;
+      color: white;
+      background-color: #FF4E4A;
+      span {
+        padding-left: 5px;
+      }
+      a {
+        color: white;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+    .School {
+      border-radius: 5px;
+      color: white;
+      background-color: #FFBD17;
+      span {
+        padding-left: 5px;
+      }
+      a {
+        color: white;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+    .GameDev {
+      border-radius: 5px;
+      color: white;
+      background-color: #8DAF20;
+      span {
+        padding-left: 5px;
+      }
+      a {
+        color: white;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+    .Home {
+      border-radius: 5px;
+      color: white;
+      background-color: #895ECC;
+      span {
+        padding-left: 5px;
+      }
+      a {
+        color: white;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+    .Tutorials {
+      border-radius: 5px;
+      color: white;
+      background-color: #59AFE1;
+      span {
+        padding-left: 5px;
+      }
+      a {
+        color: white;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.drag-hint {
+  border: #fedd56 dashed 2px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.drag-target{
+  border: #00d1b1 dashed 2px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}

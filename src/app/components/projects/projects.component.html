@@ -1,0 +1,60 @@
+<h2> Projects </h2>
+
+<div *ngIf="!userData.projectsExist">
+  <h3> It seems to look like you don't have any projects yet.</h3>
+</div>
+
+<div *ngIf="userData.projectsExist">
+  <table style="width: 900px">
+    <tr>
+      <th>Project name</th>
+      <th>Project key</th>
+      <th>Project description</th>
+    </tr>
+    <tr *ngFor="let project of projectsService.projects | async">
+      <td>
+        <div [class]="project.projectType">
+          <div style="padding-left: 5px; padding-top: 1px;">
+            <i class="fa fa-folder"></i>
+          </div>
+        </div>
+        <a [routerLink]="['/project']" (click)="projectsService.selectProject(project.projectID, 'projects'); taskService.selectProject(project.projectID)"> {{project.projectName}} </a>
+      </td>
+      <td> {{project.projectKey}}</td>
+      <td> {{project.projectDescription}} </td>
+      <button class="button is-danger is-small" (click)="projectsService.deleteProject(project.projectID, project.projectRepoFiles, project.projectRepoPath); taskService.deleteTask(project.projectTasks)"> Delete project</button>
+    </tr>
+  </table>
+</div>
+
+<br>
+
+<h3>Add project</h3>
+<div class="field" style="width: 300px">
+  <label class="label">Project name</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="Project name" [formControl]="projectName" required>
+  </div>
+  <label class="label" style="padding-top: 10px">Project description</label>
+  <div class="control">
+    <textarea class="textarea" placeholder="Project description" [formControl]="projectDescription" required></textarea>
+  </div>
+  <label class="label" style="padding-top: 10px">Project key</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="Project key" [formControl]="projectKey" required>
+  </div>
+  <label class="label" style="padding-top: 10px">Project type</label>
+  <div class="select">
+    <select [formControl]="projectType" required>
+      <option *ngFor="let type of projectTypeValues" [value]="type.value"> {{type.name}}</option>
+    </select>
+  </div>
+  <label class="label" style="padding-top: 10px">Project deadline (optional)</label>
+  <div class="control">
+    <input class="date" type="date" placeholder="Enter the date" [formControl]="projectDeadline">
+  </div>
+</div>
+<button class="button is-primary" [disabled]="projectName.invalid || projectDescription.invalid || projectKey.invalid || projectType.invalid" (click)="projectsService.addProject(projectName.value, projectDescription.value, projectKey.value, projectType.value, projectDeadline.value); cleanForm()">
+  Add project! </button>
+<br>
+<br>

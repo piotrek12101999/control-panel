@@ -1,0 +1,9 @@
+.task{
+  list-style-type: none;
+}
+
+.task:hover{
+  color:#D13D00;
+  cursor: pointer;
+  text-decoration: line-through;
+}

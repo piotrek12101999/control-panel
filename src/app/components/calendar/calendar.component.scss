@@ -1,0 +1,355 @@
+a {
+  color: white;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.add-event:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.date {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  align-items: center;
+  border: 1px solid #dbdbdb;
+  color: #363636;
+  border-radius: 4px;
+  box-shadow: none;
+  display: inline-flex;
+  font-size: 1rem;
+  height: 2.25em;
+  justify-content: flex-start;
+  line-height: 1.5;
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: calc(0.625em - 1px);
+  padding-right: calc(0.625em - 1px);
+  padding-top: calc(0.375em - 1px);
+  position: relative;
+  vertical-align: top;
+}
+
+.date:hover {
+  border: 1px solid #bdbbbb;
+}
+
+.date:focus {
+  outline: none;
+}
+
+.is-danger {
+  margin-left: 10px;
+}
+
+.calendar {
+  width: 1082px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+
+  .calendar-header {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: #00d1b1;
+    height: 120px;
+
+    h2 {
+      color: white;
+      padding-top: 30px;
+      padding-left: 20px;
+
+      i {
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
+
+    .calendar-header-day {
+      display: inline-block;
+      width: 154px;
+
+      span {
+        font-size: 21px;
+        color: white;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .calendar-main {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #f0f0f0;
+
+    .break {
+      height: 5px;
+    }
+
+    .calendar-main-other-month {
+      height: 160px;
+      width: 140px;
+      margin: 5px 5px 5px 9px;
+      display: inline-table;
+      background-color: white;
+      color: #c4c4c4;
+      border-radius: 5px;
+      z-index: 0;
+
+      .calendar-date {
+        display: flex;
+        justify-content: center;
+        font-size: 25px;
+        padding-top: 25%;
+      }
+    }
+
+    .current-date {
+      border: solid 2px #00d1b1;
+    }
+
+    .calendar-main-this-month {
+      height: 160px;
+      width: 140px;
+      margin: 5px 5px 5px 9px;
+      display: inline-table;
+      background-color: white;
+      border-radius: 5px;
+      z-index: 0;
+
+      .calendar-date-number {
+        display: flex;
+        justify-content: center;
+        font-size: 25px;
+        padding-top: 25%;
+      }
+
+      .calendar-event {
+        width: 130px;
+        margin-left: 5px;
+        margin-top: 3px;
+
+        .WebDev {
+          display: flex;
+          justify-content: center;
+          border-radius: 4px;
+          background-color: #FF4E4A;
+          color: white;
+        }
+
+        .GameDev {
+          display: flex;
+          justify-content: center;
+          border-radius: 4px;
+          background-color: #8DAF20;
+          color: white;
+        }
+
+        .School {
+          display: flex;
+          justify-content: center;
+          border-radius: 4px;
+          background-color: #FFBD17;
+          color: white;
+        }
+
+        .Home {
+          display: flex;
+          justify-content: center;
+          border-radius: 4px;
+          background-color: #895ECC;
+          color: white;
+        }
+
+        .Tutorials {
+          display: flex;
+          justify-content: center;
+          border-radius: 4px;
+          background-color: #59AFE1;
+          color: white;
+        }
+
+        .Meeting {
+          display: flex;
+          justify-content: center;
+          border-radius: 4px;
+          background-color: #9e3788;
+          color: white;
+        }
+
+        .Homework {
+          display: flex;
+          justify-content: center;
+          border-radius: 4px;
+          background-color: #ffbd17;
+          color: white;
+        }
+      }
+
+      .calendar-event:hover {
+        cursor: pointer;
+      }
+
+      .calendar-event-detail-info-right {
+        margin-top: 10px;
+        width: 200px;
+        position: absolute;
+        border: solid 1px #3636367a;
+        border-radius: 4px;
+
+        .body {
+          background-color: white;
+          border-bottom-left-radius: 4px;
+          border-bottom-right-radius: 4px;
+          color: #363636;
+
+          div {
+            padding-left: 5px;
+          }
+        }
+      }
+
+      .calendar-event-detail-info-left {
+        margin-top: 10px;
+        width: 200px;
+        position: absolute;
+        border: solid 1px #3636367a;
+        border-radius: 4px;
+        margin-left: -40px;
+
+        .body {
+          background-color: white;
+          border-bottom-left-radius: 4px;
+          border-bottom-right-radius: 4px;
+          color: #363636;
+
+          div {
+            padding-left: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.WebDev {
+  display: flex;
+  justify-content: center;
+  padding-left: 4px;
+  padding-right: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+  background-color: #FF4E4A;
+  font-size: 14px;
+}
+
+.School {
+  display: flex;
+  justify-content: center;
+  padding-left: 4px;
+  padding-right: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+  background-color: #FFBD17;
+  font-size: 14px;
+}
+
+.GameDev {
+  display: flex;
+  justify-content: center;
+  padding-left: 4px;
+  padding-right: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+  background-color: #8DAF20;
+  font-size: 14px;
+}
+
+.Home {
+  display: flex;
+  justify-content: center;
+  padding-left: 4px;
+  padding-right: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+  background-color: #895ECC;
+  font-size: 14px;
+}
+
+.Homework {
+  display: flex;
+  justify-content: center;
+  padding-left: 4px;
+  padding-right: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+  background-color: #ffbd17;
+  font-size: 14px;
+}
+
+.Tutorials {
+  display: flex;
+  justify-content: center;
+  padding-left: 4px;
+  padding-right: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+  background-color: #59AFE1;
+  font-size: 14px;
+}
+
+.Meeting {
+  display: flex;
+  justify-content: center;
+  padding-left: 4px;
+  padding-right: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+  background-color: #9e3788;
+  font-size: 14px;
+}
+
+.exit-menu {
+  font-size: 14px;
+  right: 5px;
+  top: 2px;
+  position: absolute;
+}
+
+.exit-menu:hover {
+  cursor: pointer;
+}
+
+.delete-menu {
+  font-size: 14px;
+  left: 5px;
+  top: 2px;
+  position: absolute;
+}
+
+.delete-menu:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,81 @@
+a {
+  color: #4a4a4a;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.date {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  align-items: center;
+  border: 1px solid #dbdbdb;
+  color: #363636;
+  border-radius: 4px;
+  box-shadow: none;
+  display: inline-flex;
+  font-size: 1rem;
+  height: 2.25em;
+  justify-content: flex-start;
+  line-height: 1.5;
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: calc(0.625em - 1px);
+  padding-right: calc(0.625em - 1px);
+  padding-top: calc(0.375em - 1px);
+  position: relative;
+  vertical-align: top;
+}
+
+.date:hover{
+  border: 1px solid #bdbbbb;
+}
+
+.date:focus{
+  outline: none;
+}
+
+.WebDev {
+  width: 25px;
+  height: 25px;
+  background-color: #FF4E4A;
+  color: white;
+  border-radius: 150px;
+  display: inline-block;
+}
+
+.School {
+  width: 25px;
+  height: 25px;
+  background-color: #FFBD17;
+  color: white;
+  border-radius: 150px;
+  display: inline-block;
+}
+
+.GameDev {
+  width: 25px;
+  height: 25px;
+  background-color: #8DAF20;
+  color: white;
+  border-radius: 150px;
+  display: inline-block;
+}
+
+.Home {
+  width: 25px;
+  height: 25px;
+  background-color: #895ECC;
+  color: white;
+  border-radius: 150px;
+  display: inline-block;
+}
+
+.Tutorials {
+  width: 25px;
+  height: 25px;
+  background-color: #59AFE1;
+  color: white;
+  border-radius: 150px;
+  display: inline-block;
+}

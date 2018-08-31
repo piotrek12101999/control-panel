@@ -137,6 +137,15 @@ export class TaskService {
     });
   }
 
+  public editTasksProjectValues(tasks: any, newName: string, newType: string): void {
+    for (let i = 0; i < tasks.length; i++) {
+      this.tasksCollection.doc(tasks[i].taskID).update({
+        taskAssignedToProjectName: newName,
+        taskAssignedToProjectType: newType
+      });
+    }
+  }
+
   public selectTask(id: any, page: string) {
     this._authService.user.subscribe(val => {
       this.selectedTask = this._afs.collection('users').doc(val.uid).collection('tasks').doc(id);

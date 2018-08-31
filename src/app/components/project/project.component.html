@@ -40,7 +40,8 @@
     </div>
   </div>
   <button class="button is-primary" [disabled]="editedProjectName.invalid || editedProjectDescription.invalid || editedProjectKey.invalid"
-    (click)="projectsService.editProject(editedProjectName.value, editedProjectDescription.value, editedProjectKey.value, editedProjectType.value, editedProjectDate.value, projectsService.selectedProjectID); endEditProject()">
+    (click)="projectsService.editProject(editedProjectName.value, editedProjectDescription.value, editedProjectKey.value, editedProjectType.value, editedProjectDate.value, projectsService.selectedProjectID);
+    taskService.editTasksProjectValues(projectsService.selectedProjectTasks, editedProjectName.value, editedProjectType.value); endEditProject()">
     Save </button>
   <button class="button is-danger" (click)="endEditProject()" style="margin-left: 10px"> Cancel </button>
 </div>

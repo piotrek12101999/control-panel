@@ -38,7 +38,7 @@
               <img [src]="user.photoURL" height="256px" width="256px" style="border-radius: 5px">
               <br>
               <br>
-              <button class="button" (click)="auth.hideLoginComponent()">
+              <button  *ngIf="auth.showGoHomeButton" class="button" (click)="auth.hideLoginComponent()">
                 <a [routerLink]="['/home']">
                   <span> Let's get started ! </span>
                 </a>

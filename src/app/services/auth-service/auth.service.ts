@@ -12,12 +12,15 @@ export class AuthService {
 
   public user: Observable<UserData>;
   public showLoginComponent: boolean;
+  public showGoHomeButton: boolean;
 
   constructor( private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
     this.showLoginComponent = true;
+    this.showGoHomeButton = false;
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
+          this.showGoHomeButton = true;
           return this.afs.doc<UserData>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);

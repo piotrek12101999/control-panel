@@ -1,0 +1,87 @@
+<h2> Groups managment </h2>
+<h3 class="form-trigger" (click)="triggerForm(); cleanForm()"> Add new group</h3>
+
+<div class="field" style="width: 300px" *ngIf="showForm">
+  <label class="label">Group name</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="Group name" [formControl]="groupName" required>
+  </div>
+  <label class="label" style="padding-top: 10px">Group description</label>
+  <div class="control">
+    <textarea class="textarea" placeholder="Group description" [formControl]="groupDesc" required></textarea>
+  </div>
+  <br><br>
+  <button class="button is-primary" [disabled]="groupName.invalid || groupDesc.invalid" (click)="groupService.addGroup(groupName.value, groupDesc.value); triggerForm(); cleanForm()">
+    Save </button>
+  <button class="button is-danger" style="margin-left: 10px" (click)="triggerForm(); cleanForm()"> Cancel </button>
+</div>
+
+<h3> Yours groups</h3>
+<table style="width: 900px">
+  <tr>
+    <th>Group name</th>
+    <th>Group description</th>
+  </tr>
+  <tr *ngFor="let group of (groupService.adminGroups | async)">
+    <td>  <a [routerLink]="['/group']" (click)="groupService.selectGroup(group.groupID,'groupAdmin')"> {{group.groupName}} </a> </td>
+    <td> {{group.groupDesc}} </td>
+    <button (click)="groupService.deleteGroup(group.groupID)" class="button is-danger is-small"> Delete group</button>
+  </tr>
+</table>
+
+<h3> Groups that you're part of: </h3>
+<table style="width: 900px">
+  <tr>
+    <th>Group name</th>
+    <th>Group description</th>
+    <th>Group rights</th>
+  </tr>
+  <tr *ngFor="let group of (groupService.userGroupsRead | async)">
+    <td> {{group.groupName}} </td>
+    <td> {{group.groupDesc}} </td>
+    <td> Read </td>
+  </tr>
+  <tr *ngFor="let group of (groupService.userGroupsReadWrite | async)">
+    <td>{{group.groupName}}</td>
+    <td> {{group.groupDesc}} </td>
+    <td> Read and write </td>
+  </tr>
+</table>
+
+<h3> Send invitation </h3>
+<h4> You can only send invitation to groups which you created</h4>
+<div class="field" style="width: 300px">
+  <label class="label">User email</label>
+  <div class="control">
+    <input class="input" [class.is-danger]="invitationService.showEmailWarning === true" type="text" placeholder="User email" [formControl]="invitationEmail" required>
+    <p class="help is-danger" *ngIf="invitationService.showEmailWarning === true">You can't invite yourself!</p>
+  </div>
+  <label class="label" style="margin-top: 10px">User rights</label>
+  <div class="select">
+    <select [formControl]="invitationRights" required>
+      <option value="Read and write"> Read and write </option>
+      <option value="Read"> Read </option>
+    </select>
+  </div>
+  <label class="label" style="margin-top: 10px">Group to invite </label>
+  <div class="select">
+    <select [formControl]="invitationGroup" required>
+      <option *ngFor="let group of (groupService.adminGroups | async)" [value]="[group.groupID, group.groupName]"> {{group.groupName}}</option>
+    </select>
+  </div>
+  <br><br>
+  <button class="button is-primary" [disabled]="invitationEmail.invalid || invitationGroup.invalid || invitationRights.invalid || invitationService.showEmailWarning === true" (click)="invitationService.sendInvitation(invitationGroup.value, invitationEmail.value, invitationRights.value)">
+    Save </button>
+  <button class="button is-danger" style="margin-left: 10px" (click)="triggerForm(); cleanForm()"> Cancel </button>
+</div>
+
+<h3 *ngIf="invitationService.invitationsCount > 0"> Invitations to groups </h3>
+<h3 *ngIf="invitationService.invitationsCount === 0"> You don't have any invitations to groups </h3>
+<div *ngFor="let invitation of (invitationService.userInvitations | async); let i = index;">
+  <h4> {{invitation.groupName}} </h4>
+  <button class="button is-primary" (click)="invitationService.acceptInvitation(invitation.invitationID, invitation.groupID, invitation.targetRights)">
+    Join group </button>
+  <button class="button is-danger" style="margin-left: 10px;" (click)="invitationService.deleteInvitation(invitation.invitationID)">
+    Cancel</button>
+  <hr *ngIf="i+1 !== invitationService.invitationsCount" style="width: 300px">
+</div>

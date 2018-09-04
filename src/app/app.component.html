@@ -4,31 +4,50 @@
 
 <div *ngIf="!auth.showLoginComponent" class="wrapper">
   <nav class="sideMenu">
-    <a [routerLink]="['/home']">
+    <a [routerLink]="['/home']" (click)="pageService.closeProjectsTabsSelected()">
       <h2>
         <strong> Control panel </strong>
       </h2>
     </a>
     <div class="wrapper">
       <div class="wrapper-tabs">
-        <a [routerLink]="['/home']">
+        <a [routerLink]="['/home']" (click)="pageService.closeProjectsTabsSelected()">
           <div [class.selected]="pageService.homeSelected">
             <i class="fa fa-home"></i> <span> Home </span> </div>
         </a>
       </div>
-      <a [routerLink]="['/projects']">
+      <a [routerLink]="['/groups']" (click)="pageService.closeProjectsTabsSelected()">
+        <div [class.selected]="pageService.groupSelcted">
+          <i class="fa fa-group"></i> <span> Groups </span> <div *ngIf="invitationsService.invitationsCount > 0" class="invitation-notifier"> <span class="invitation-counter"> {{invitationsService.invitationsCount}} </span> </div> </div>
+      </a>
+      <a [routerLink]="['/projects']" (click)="pageService.projectsTabSelected()">
         <div [class.selected]="pageService.projectsSelected">
           <i class="fa fa-file-code-o"></i> <span> Projects </span> </div>
       </a>
-      <a [routerLink]="['/tasks']">
+
+      <!-- TODO: figure out adding classes to tabs when selected -->
+
+      <a [routerLink]="['/own-projects']" *ngIf="pageService.showProjectsSubcategory" [class.selected]="pageService.ownProjectsSelected" (click)="pageService.selectOwnProjects()">
+        <div class="projects-subcategory">
+          <i class="fa fa-user"></i> <span> Own projects </span> </div>
+      </a>
+      <a [routerLink]="['/group-projects']" *ngIf="pageService.showProjectsSubcategory" [class.selected]="pageService.groupProjectsSeclected" (click)="pageService.selectGroupProjects()">
+        <div class="projects-subcategory">
+          <i class="fa fa-group"></i> <span> Group projects </span> </div>
+      </a>
+
+      <!-- TODO: page service to be fixed as well -->
+
+
+      <a [routerLink]="['/tasks']" (click)="pageService.closeProjectsTabsSelected()">
         <div [class.selected]="pageService.tasksSelected">
           <i class="fa fa-tasks"></i> <span> Tasks </span> </div>
       </a>
-      <a [routerLink]="['/timesheet']">
+      <a [routerLink]="['/timesheet']" (click)="pageService.closeProjectsTabsSelected()">
         <div [class.selected]="pageService.timesheetSelected">
           <i class="fa fa-clock-o"></i> <span> Timesheet </span> </div>
       </a>
-      <a [routerLink]="['/calendar']">
+      <a [routerLink]="['/calendar']" (click)="pageService.closeProjectsTabsSelected()">
         <div [class.selected]="pageService.calendarSelected">
           <i class="fa fa-calendar"></i> <span> Calendar </span> </div>
       </a>

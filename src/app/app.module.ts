@@ -26,6 +26,10 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { ProjectComponent } from './components/project/project.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { TaskComponent } from './components/task/task.component';
+import { OwnProjectsComponent } from './components/own-projects/own-projects.component';
+import { GroupProjectsComponent } from './components/group-projects/group-projects.component';
+import { GroupComponent } from './components/group/group.component';
+import { GroupsComponent } from './components/groups/groups.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,11 @@ import { TaskComponent } from './components/task/task.component';
     CalendarComponent,
     ProjectComponent,
     FileUploadComponent,
-    TaskComponent
+    TaskComponent,
+    OwnProjectsComponent,
+    GroupProjectsComponent,
+    GroupComponent,
+    GroupsComponent
   ],
   imports: [
     BrowserModule,

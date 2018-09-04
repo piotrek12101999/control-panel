@@ -52,11 +52,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this._authService.hideLoginComponent();
     this.startEditingProject = false;
     this._pageService.projectsSelected = true;
+    this._pageService.showProjectsSubcategory = true;
     this._pageService.homeSelected = false;
   }
 
   ngOnDestroy() {
     this._pageService.projectsSelected = false;
+    this._pageService.showProjectsSubcategory = false;
     this._pageService.checkChange();
   }
 
